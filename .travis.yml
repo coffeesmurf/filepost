@@ -1,4 +1,19 @@
 language: go
 
 go:
-  - 1.x
+  - 1.8
+
+install:
+  - "go get -d -v ./..."
+  - "go build -o filepost main.go"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "GhmNCojr6G32zf1j1Ytl9IX5K6rJTQR00x+usdT62A03W1ZY8QQzrgPf06lNu3j59f9aDBVYikNCWvtI1jjleBIQc6Fa18qYDQxNP9O9fnyRkhToYVcn/oAbJCZrwUnlXikLwUg3SI/3yDBTpEXQUjcnBuuyG5qxfSHZ7kjIAVcHUwJT/Hd0QqMMYup+Ybw32bhepOEtPWdUC72jXlURDRAcDYv+4cSsmG6FxN79GBPE8S+lKbaaOY4MutxfW/HUx98UwknML3nHuyqhwMDNHODZoj4hm7sHsG79w49Nwo9UIJF1DrO+U4D4gQjfIq51dvxffn4z1Fgd/PrK6yiNOTW6wkazc6i/3G23UyE457TFvkzCWm+QvHT3jShW1wLUBHQJATxdFBAJe+m6u8zUZ/TKxEnWLoGMU1y25s8Lv2xvgBknVSM5DATZUuvn38bQivfPNVEbZ9TBvbslq0VvBfd/SLo/JM+r1R3Ts1GH0G0LUy0XajsFWEAxggiy28Wf/3nU8ST5XZjzT3h2DnIBon2UiCqKfG2p2BKFR4vSye4L3U0oG3lMGCBCRhbOEwLnjwRvEpjc/c7YS9OWT43/Nn3iw2HLFcRDYPDUZ5gtkCgyo/wB+jXkwPh5SfJ5ZDcXSGFjwytsB+7PMVeJ1kv1BWao8+y2Ngej2k3G/mkiNNA="
+  file: "filepost"
+  skip_cleanup: true
+  on:
+    repo: coffeesmurf/filepost
+    tags: true
+    all_branches: true
