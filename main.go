@@ -8,7 +8,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
+	"path/filepath"
 	"runtime"
+	"strings"
 	"sync"
 	"time"
 )
@@ -16,7 +19,7 @@ import (
 func main() {
 
 	dataSourceTokenFlag := flag.String("token", "", "Bearer token used to post file content to the speficied URL.")
-	folderPathFlag := flag.String("path", "./input", "Path to folder that will contain the files to process.")
+	folderPathFlag := flag.String("path", "./input", "Path to folder that will contain the .CSV files to process.")
 	destinationURLFlag := flag.String("url", "", "Destination url where the POST request will be made.")
 
 	flag.Parse()
@@ -45,15 +48,23 @@ func main() {
 			log.Fatal(err)
 		}
 
-		if len(files) > 0 {
+		var csvFiles []string
 
-			fmt.Printf("Starting to upload %d files\n", len(files))
+		for _, fileInfo := range files {
+			if strings.ToUpper(filepath.Ext(fileInfo.Name())) == ".CSV" {
+				csvFiles = append(csvFiles, fileInfo.Name())
+			}
+		}
+
+		if len(csvFiles) > 0 {
+
+			fmt.Printf("Starting to upload %d files\n", len(csvFiles))
 
 			startTime := time.Now()
 
-			uploadFiles(*folderPathFlag, files, *dataSourceTokenFlag, *destinationURLFlag)
+			uploadFiles(*folderPathFlag, csvFiles, *dataSourceTokenFlag, *destinationURLFlag)
 
-			fmt.Printf("%d files uploaded in %s\n", len(files), time.Since(startTime).String())
+			fmt.Printf("%d files uploaded in %s\n", len(csvFiles), time.Since(startTime).String())
 		}
 
 		d.Close()
@@ -61,7 +72,7 @@ func main() {
 	}
 }
 
-func uploadFiles(path string, files []os.FileInfo, dataSourceToken string, destinationURL string) {
+func uploadFiles(folderPath string, files []string, dataSourceToken string, destinationURL string) {
 
 	client := &http.Client{}
 
@@ -79,12 +90,12 @@ func uploadFiles(path string, files []os.FileInfo, dataSourceToken string, desti
 			defer os.Remove(filePath)
 			defer waitGroup.Done()
 
-			csvBytes, err := ioutil.ReadFile(filePath)
+			filesContent, err := ioutil.ReadFile(filePath)
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			req, err := http.NewRequest("POST", destinationURL, bytes.NewBuffer(csvBytes))
+			req, err := http.NewRequest("POST", destinationURL, bytes.NewBuffer(filesContent))
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -104,7 +115,7 @@ func uploadFiles(path string, files []os.FileInfo, dataSourceToken string, desti
 
 			fmt.Printf("\tDone with %s in %s\n", filePath, time.Since(startTime).String())
 
-		}(path + "/" + file.Name())
+		}(path.Join(folderPath, file))
 	}
 
 	waitGroup.Wait()
