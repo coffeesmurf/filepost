@@ -13,5 +13,5 @@ deploy:
   file: bin/filepost
   on:
     repo: coffeesmurf/filepost
-
-
+    tags: true
+    all_branches: true
