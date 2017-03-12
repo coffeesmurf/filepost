@@ -2,15 +2,18 @@ language: go
 go:
 - 1.8
 install:
+- go get github.com/mitchellh/gox
 - go get -d -v ./...
-- go build -o bin/filepost -i .
+- gox -osarch="windows/amd64 linux/amd64"
 
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: bpFKa49tMZjsuuXIL9qDPU/fvDdqPtz7FoA8ZVfWcjE7y9HVbXvCB3sILsFlW8/tj5SahsJ8ueXdf9D3S2IcA9bsM0k1OQDR4sw/c/cMMT23NwVkQPJLEctdUhBlrKUq1Eux6KI22bvPDLR8/ekUSGHJMMVSUHCmZVevd94uMMa74JCOJlBhl4jqj8WUwTHD/wuP3zjGlkt0+lYALzC8mgjok7A7q5sgJ+eqBpYchN/56NOH2GsYFAy/64Yf7ra1FBoj7FzST5NNCgDWd+D3LFMd7s9gJeBOz6AtIwUZnzIyDfOg5+9mEugXXUoTj+bngSBGZzFp7VDcWW64QI1/76LdAESqgubTYb3kichSbVFE3isdKlyupPUvt7ilh7TmouRW6Oj/XMzFZK6qS1vwcs4p9V04ezyHehwYwuUtupelrc9e2SYrVE31uY/fp80hiOb/3IZM2DaufRUfhrVbFeS7bfF72laSvoQf+kDf4bMMg0mqsAsJ3GKFkzcDiUG196vk7XRYefbQY+Esum4bzx3f8BCe2FFD8ZSn/N30QXZXIGFgmYHBrwOB44UHL63REUvqND1U8iA+NBmtgjP4zw2dleS19+IoxngHgCbgC0dqwqunXI8ggAMXJu/DZdi20XF6TJ5UyN4oJTFOyET6uR1wNhVHrhkOHK845HxVE84=
-  file: bin/filepost
+  file:
+    - filepost_linux_amd64
+    - filepost_windows_amd64.exe
   on:
     repo: coffeesmurf/filepost
     tags: true
