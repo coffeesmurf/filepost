@@ -1,19 +1,17 @@
 language: go
-
 go:
-  - 1.8
-
+- 1.8
 install:
-  - "go get -d -v ./..."
-  - "go build -o bin/filepost -i ."
+- go get -d -v ./...
+- go build -o bin/filepost -i .
 
 deploy:
   provider: releases
-  api_key:
-    secure: GhmNCojr6G32zf1j1Ytl9IX5K6rJTQR00x+usdT62A03W1ZY8QQzrgPf06lNu3j59f9aDBVYikNCWvtI1jjleBIQc6Fa18qYDQxNP9O9fnyRkhToYVcn/oAbJCZrwUnlXikLwUg3SI/3yDBTpEXQUjcnBuuyG5qxfSHZ7kjIAVcHUwJT/Hd0QqMMYup+Ybw32bhepOEtPWdUC72jXlURDRAcDYv+4cSsmG6FxN79GBPE8S+lKbaaOY4MutxfW/HUx98UwknML3nHuyqhwMDNHODZoj4hm7sHsG79w49Nwo9UIJF1DrO+U4D4gQjfIq51dvxffn4z1Fgd/PrK6yiNOTW6wkazc6i/3G23UyE457TFvkzCWm+QvHT3jShW1wLUBHQJATxdFBAJe+m6u8zUZ/TKxEnWLoGMU1y25s8Lv2xvgBknVSM5DATZUuvn38bQivfPNVEbZ9TBvbslq0VvBfd/SLo/JM+r1R3Ts1GH0G0LUy0XajsFWEAxggiy28Wf/3nU8ST5XZjzT3h2DnIBon2UiCqKfG2p2BKFR4vSye4L3U0oG3lMGCBCRhbOEwLnjwRvEpjc/c7YS9OWT43/Nn3iw2HLFcRDYPDUZ5gtkCgyo/wB+jXkwPh5SfJ5ZDcXSGFjwytsB+7PMVeJ1kv1BWao8+y2Ngej2k3G/mkiNNA=
-  file: bin/filepost
   skip_cleanup: true
+  api_key:
+    secure: bpFKa49tMZjsuuXIL9qDPU/fvDdqPtz7FoA8ZVfWcjE7y9HVbXvCB3sILsFlW8/tj5SahsJ8ueXdf9D3S2IcA9bsM0k1OQDR4sw/c/cMMT23NwVkQPJLEctdUhBlrKUq1Eux6KI22bvPDLR8/ekUSGHJMMVSUHCmZVevd94uMMa74JCOJlBhl4jqj8WUwTHD/wuP3zjGlkt0+lYALzC8mgjok7A7q5sgJ+eqBpYchN/56NOH2GsYFAy/64Yf7ra1FBoj7FzST5NNCgDWd+D3LFMd7s9gJeBOz6AtIwUZnzIyDfOg5+9mEugXXUoTj+bngSBGZzFp7VDcWW64QI1/76LdAESqgubTYb3kichSbVFE3isdKlyupPUvt7ilh7TmouRW6Oj/XMzFZK6qS1vwcs4p9V04ezyHehwYwuUtupelrc9e2SYrVE31uY/fp80hiOb/3IZM2DaufRUfhrVbFeS7bfF72laSvoQf+kDf4bMMg0mqsAsJ3GKFkzcDiUG196vk7XRYefbQY+Esum4bzx3f8BCe2FFD8ZSn/N30QXZXIGFgmYHBrwOB44UHL63REUvqND1U8iA+NBmtgjP4zw2dleS19+IoxngHgCbgC0dqwqunXI8ggAMXJu/DZdi20XF6TJ5UyN4oJTFOyET6uR1wNhVHrhkOHK845HxVE84=
+  file: bin/filepost
   on:
     repo: coffeesmurf/filepost
-    tags: true
-    all_branches: true
+
+
