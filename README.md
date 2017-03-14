@@ -12,15 +12,14 @@ The following options can be specified:
 - token: A Bearer token value used for the POST request (mandatory).
 - url: The URL used for the POST request (mandatory).
 
-
 `$ filepost -token="my token" -path="~/CSVFiles" -url="https://...."`
 
-The token can be read from a file (e.g. mytoken.txt) using: 
+The token can be read from a file (e.g. mytoken.txt) and passed in as an argument using: 
 
 `$ filepost -token=$(<mytoken.txt) ...`
 
 ## Notes 
 
-- The POST request uses a Content-Type of "text/csv"
+- Only .csv files are supported at the moment. The POST request uses a Content-Type of "text/csv"
 - Files are removed from the folder once they have been processed, even if the upload is not successful.
 - I am new at using Go. Feedback is welcome.
