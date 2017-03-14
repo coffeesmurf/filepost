@@ -24,13 +24,9 @@ func main() {
 
 	flag.Parse()
 
-	if *dataSourceTokenFlag == "" {
-		fmt.Println("You must specify a bearer token. Use the -h option to learn more.")
-		os.Exit(1)
-	}
-
-	if *destinationURLFlag == "" {
-		fmt.Println("You must specify a destination url. Use the -h option to learn more.")
+	if *dataSourceTokenFlag == "" || *destinationURLFlag == "" {
+		fmt.Println("You must specify a bearer token and a destination url.")
+		fmt.Println("Use the -h option to learn more.")
 		os.Exit(1)
 	}
 
