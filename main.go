@@ -44,23 +44,26 @@ func main() {
 			log.Fatal(err)
 		}
 
-		var csvFiles []string
+		var filesToUpload []string
 
 		for _, fileInfo := range files {
 			if strings.ToUpper(filepath.Ext(fileInfo.Name())) == ".CSV" {
-				csvFiles = append(csvFiles, fileInfo.Name())
+				filesToUpload = append(filesToUpload, fileInfo.Name())
+			}
+			if strings.ToUpper(filepath.Ext(fileInfo.Name())) == ".JSON" {
+				filesToUpload = append(filesToUpload, fileInfo.Name())
 			}
 		}
 
-		if len(csvFiles) > 0 {
+		if len(filesToUpload) > 0 {
 
-			fmt.Printf("Starting to upload %d files\n", len(csvFiles))
+			fmt.Printf("Starting to upload %d files\n", len(filesToUpload))
 
 			startTime := time.Now()
 
-			uploadFiles(*folderPathFlag, csvFiles, *dataSourceTokenFlag, *destinationURLFlag)
+			uploadFiles(*folderPathFlag, filesToUpload, *dataSourceTokenFlag, *destinationURLFlag)
 
-			fmt.Printf("%d files uploaded in %s\n", len(csvFiles), time.Since(startTime).String())
+			fmt.Printf("%d files uploaded in %s\n", len(filesToUpload), time.Since(startTime).String())
 		}
 
 		d.Close()
@@ -96,7 +99,12 @@ func uploadFiles(folderPath string, files []string, dataSourceToken string, dest
 				fmt.Println(err)
 			}
 
-			req.Header.Add("Content-Type", "text/csv; chartset=utf-8")
+			if strings.HasSuffix(strings.ToUpper(filePath), ".CSV") {
+				req.Header.Add("Content-Type", "text/csv; chartset=utf-8")
+			} else if strings.HasSuffix(strings.ToUpper(filePath), ".JSON") {
+				req.Header.Add("Content-Type", "application/json; chartset=utf-8")
+			}
+
 			req.Header.Add("Authorization", authorizationHeaderValue)
 
 			resp, err := client.Do(req)
