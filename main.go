@@ -18,14 +18,14 @@ import (
 
 func main() {
 
-	dataSourceTokenFlag := flag.String("token", "", "Bearer token used to post file content to the speficied URL.")
-	folderPathFlag := flag.String("path", "./input", "Path to folder that will contain the .CSV files to process.")
+	authHeaderValueFlag := flag.String("auth", "", "Value used for the Authorization header of the POST request.")
+	folderPathFlag := flag.String("path", "./input", "Path to folder that will contain the .CSV/.json files to process.")
 	destinationURLFlag := flag.String("url", "", "Destination url where the POST request will be made.")
 
 	flag.Parse()
 
-	if *dataSourceTokenFlag == "" || *destinationURLFlag == "" {
-		fmt.Println("You must specify a bearer token and a destination url.")
+	if *authHeaderValueFlag == "" || *destinationURLFlag == "" {
+		fmt.Println("You must specify an authorization header value and a destination url.")
 		fmt.Println("Use the -h option to learn more.")
 		os.Exit(1)
 	}
@@ -61,7 +61,7 @@ func main() {
 
 			startTime := time.Now()
 
-			uploadFiles(*folderPathFlag, filesToUpload, *dataSourceTokenFlag, *destinationURLFlag)
+			uploadFiles(*folderPathFlag, filesToUpload, *authHeaderValueFlag, *destinationURLFlag)
 
 			fmt.Printf("%d files uploaded in %s\n", len(filesToUpload), time.Since(startTime).String())
 		}
@@ -71,14 +71,12 @@ func main() {
 	}
 }
 
-func uploadFiles(folderPath string, files []string, dataSourceToken string, destinationURL string) {
+func uploadFiles(folderPath string, files []string, authHeaderValue string, destinationURL string) {
 
 	client := &http.Client{}
 
 	waitGroup := new(sync.WaitGroup)
 	waitGroup.Add(len(files))
-
-	var authorizationHeaderValue = "Bearer " + dataSourceToken
 
 	for _, file := range files {
 		go func(filePath string) {
@@ -105,7 +103,7 @@ func uploadFiles(folderPath string, files []string, dataSourceToken string, dest
 				req.Header.Add("Content-Type", "application/json; chartset=utf-8")
 			}
 
-			req.Header.Add("Authorization", authorizationHeaderValue)
+			req.Header.Add("Authorization", authHeaderValue)
 
 			resp, err := client.Do(req)
 

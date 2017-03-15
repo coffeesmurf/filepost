@@ -9,14 +9,14 @@ Golang application that monitors a folder for CSV files and uploads the content 
 The following options can be specified: 
 
 - path: The path to the folder being monitored (optional. Default: ./input)
-- token: A Bearer token value used for the POST request (mandatory).
+- auth: Value used for the Authorization header of the POST request (mandatory).
 - url: The URL used for the POST request (mandatory).
 
-`$ filepost -token="my token" -path="~/CSVFiles" -url="https://...."`
+`$ filepost -auth="Bearer..." -path="~/Files" -url="https://...."`
 
-The token can be read from a file (e.g. mytoken.txt) and passed in as an argument using: 
+The authorization header value can be read from a file (e.g. mytoken.txt) and passed in as an argument using: 
 
-`$ filepost -token=$(<mytoken.txt) ...`
+`$ filepost -auth=$(<mytoken.txt) ...`
 
 ## Notes 
 
