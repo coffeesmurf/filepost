@@ -20,6 +20,6 @@ The token can be read from a file (e.g. mytoken.txt) and passed in as an argumen
 
 ## Notes 
 
-- Only .csv files are supported at the moment. The POST request uses a Content-Type of "text/csv"
+- Only .csv and .json files are supported at the moment. The POST request uses a Content-Type of "text/csv" or "application/json".
 - Files are removed from the folder once they have been processed, even if the upload is not successful.
 - I am new at using Go. Feedback is welcome.
