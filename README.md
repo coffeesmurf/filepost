@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/coffeesmurf/filepost.png?branch=master)](https://travis-ci.org/coffeesmurf/filepost)
 
-Golang application that monitors a folder for CSV files and uploads the content using a POST request.
+Golang application that monitors a folder for CSV and JSON files and uploads the content using a POST request.
 
 ## Usage
 
