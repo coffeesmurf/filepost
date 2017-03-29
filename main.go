@@ -109,9 +109,7 @@ func uploadFiles(folderPath string, files []string, authHeaderValue string, dest
 
 			if err != nil {
 				fmt.Println(err)
-			}
-
-			if resp.StatusCode != 200 {
+			} else if resp.StatusCode != 200 {
 				fmt.Println(string(resp.Status))
 			}
 
